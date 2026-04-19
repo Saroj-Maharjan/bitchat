@@ -8,6 +8,7 @@
 
 import Testing
 import Foundation
+import BitFoundation
 @testable import bitchat
 
 // MARK: - Test Helpers
@@ -196,8 +197,7 @@ struct ChatViewModelReceivingTests {
         )
 
         let found = await TestHelpers.waitUntil({
-            viewModel.publicMessagePipeline.flushIfNeeded()
-            return viewModel.messages.contains { $0.content == "Public hello from Bob" }
+            viewModel.timelineStore.messages(for: .mesh).contains { $0.content == "Public hello from Bob" }
         }, timeout: TestConstants.defaultTimeout)
 
         #expect(found)
